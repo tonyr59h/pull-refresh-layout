@@ -22,7 +22,7 @@ import kotlin.math.min
 import kotlin.math.pow
 
 @Suppress("MemberVisibilityCanBePrivate")
-class PullRefreshLayout @JvmOverloads constructor(
+open class PullRefreshLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : ViewGroup(context, attrs) {
@@ -378,8 +378,8 @@ class PullRefreshLayout @JvmOverloads constructor(
         mRefreshView = ImageView(context)
         setRefreshStyle(type)
         mRefreshView?.visibility = GONE
-        addView(mRefreshView, 0)
-        setWillNotDraw(false)
+        this.addView(mRefreshView, 0)
+        this.setWillNotDraw(false)
         isChildrenDrawingOrderEnabled = true
     }
 
