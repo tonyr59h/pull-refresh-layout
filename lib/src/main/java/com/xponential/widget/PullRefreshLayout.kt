@@ -16,6 +16,7 @@ import android.view.animation.Interpolator
 import android.view.animation.Transformation
 import android.widget.ImageView
 import java.security.InvalidParameterException
+import java.util.logging.Logger
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -145,8 +146,7 @@ open class PullRefreshLayout @JvmOverloads constructor(
         return mIsBeingDragged
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(ev: MotionEvent): Boolean {
+    private fun doTouchEvent(ev: MotionEvent): Boolean {
         if (!mIsBeingDragged) return super.onTouchEvent(ev)
 
         when (ev.action) {
@@ -246,6 +246,16 @@ open class PullRefreshLayout @JvmOverloads constructor(
             }
         }
         return true
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(ev: MotionEvent): Boolean {
+        return try {
+            doTouchEvent(ev)
+        } catch (t: Throwable) {
+            Logger.getGlobal().warning("PullRefreshLayout::onTouchEvent(error=${t.message})")
+            false
+        }
     }
 
     @Suppress("unused")
