@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
 }
 
 android {
@@ -31,6 +32,35 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
         freeCompilerArgs = ['-Xinline-classes']
+    }
+
+    publishing {
+        singleVariant("debug") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+        singleVariant("release") {
+            withJavadocJar()
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.xponential.widget'
+                artifactId = 'pull-refresh-layout'
+                version = '1.0.0'
+            }
+            debug(MavenPublication) {
+                from components.debug
+                groupId = 'com.xponential.widget'
+                artifactId = 'pull-refresh-layout-debug'
+                version = '1.0.0'
+            }
+        }
     }
 }
 
