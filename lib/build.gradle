@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'com.xponential.widget'
+group = 'com.github.tonyr59h'
 version = '1.0.0'
 
 android {
@@ -54,12 +54,6 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.xponential.widget'
                 artifactId = 'pull-refresh-layout'
-                version = '1.0.0'
-            }
-            debug(MavenPublication) {
-                from components.debug
-                groupId = 'com.xponential.widget'
-                artifactId = 'pull-refresh-layout-debug'
                 version = '1.0.0'
             }
         }
